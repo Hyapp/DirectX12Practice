@@ -1,5 +1,5 @@
-#include "stdafx.h"
-#include "DirectX12Test01.h"
+#include <stdafx.h>
+#include "../header/DirectX12Test01.h"
 
 _Use_decl_annotations_
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)

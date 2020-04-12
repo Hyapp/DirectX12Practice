@@ -1,5 +1,5 @@
-#include "stdafx.h"
-#include "Win32Application.h"
+#include <stdafx.h>
+#include <Win32Application.h>
 
 HWND Win32Application::m_hwnd = nullptr;
 
