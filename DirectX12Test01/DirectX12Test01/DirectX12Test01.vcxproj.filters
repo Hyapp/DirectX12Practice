@@ -30,10 +30,30 @@
     <ClCompile Include="source\Win32Application.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="source\hellowTriangle.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ConstBuffer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header\DirectX12Test01.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="header\hellowTriangle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="header\ConstBuffer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\shader.hlsl">
+      <Filter>资源文件</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\CBufferTest.hlsl">
+      <Filter>资源文件</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
