@@ -1,5 +1,5 @@
 #include <stdafx.h>
-#include "../header/hellowTriangle.h"
+#include <hellowTriangle.h>
 
 D3D12HellowTriangle::D3D12HellowTriangle(UINT width, UINT height, std::wstring title) :
 	DXSample(width, height, title),

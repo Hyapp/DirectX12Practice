@@ -1,5 +1,5 @@
 #include <stdafx.h>
-#include "../header/ConstBuffer.h"
+#include <ConstBuffer.h>
 
 D3D12HelloConstBuffer::D3D12HelloConstBuffer(UINT width, UINT height, std::wstring title) :
 	DXSample(width, height, title),
