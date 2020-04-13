@@ -33,6 +33,7 @@
     <ClInclude Include="header\ConstBuffer.h" />
     <ClInclude Include="header\DirectX12Test01.h" />
     <ClInclude Include="header\hellowTriangle.h" />
+    <ClInclude Include="header\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\CBufferTest.hlsl">
@@ -111,8 +112,8 @@
     <OutDir>bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <IncludePath>H:\dx\DirectX12Practice\Include;H:\dx\DirectX12Practice\DirectX12Test01\DirectX12Test01\header;$(IncludePath)</IncludePath>
-    <SourcePath>H:\dx\DirectX12Practice\DirectX12Test01\DirectX12Test01\source;$(SourcePath)</SourcePath>
+    <IncludePath>H:\DirectX12Test\DirectX12Practice\Include;H:\DirectX12Test\DirectX12Practice\DirectX12Test01\DirectX12Test01\header;$(IncludePath)</IncludePath>
+    <SourcePath>H:\DirectX12Test\DirectX12Practice\DirectX12Test01\DirectX12Test01\source;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
