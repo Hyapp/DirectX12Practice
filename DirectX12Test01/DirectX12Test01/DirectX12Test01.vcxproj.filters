@@ -36,6 +36,9 @@
     <ClCompile Include="source\ConstBuffer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="source\TestFrameBuffer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header\DirectX12Test01.h">
@@ -50,12 +53,18 @@
     <ClInclude Include="header\stdafx.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="header\TestFrameBuffer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\shader.hlsl">
       <Filter>资源文件</Filter>
     </FxCompile>
     <FxCompile Include="Shader\CBufferTest.hlsl">
+      <Filter>资源文件</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\TestFrameBuffer.hlsl">
       <Filter>资源文件</Filter>
     </FxCompile>
   </ItemGroup>
