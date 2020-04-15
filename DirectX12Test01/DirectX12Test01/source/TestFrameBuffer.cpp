@@ -103,7 +103,8 @@ void D3D12HelloFrameBuffering::LoadPipeline()
         rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
         rtvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
         ThrowIfFailed(m_device->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(&m_rtvHeap)));
-
+        
+        //从device获取每个RTV的偏移量，但是需要前置创建好rtv描述符堆来描述rtv
         m_rtvDescriptorSize = m_device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
     }
 
@@ -112,6 +113,7 @@ void D3D12HelloFrameBuffering::LoadPipeline()
         CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(m_rtvHeap->GetCPUDescriptorHandleForHeapStart());
 
         // Create a RTV and a command allocator for each frame.
+        // RTV和cmd allocator是帧资源
         for (UINT n = 0; n < FrameCount; n++)
         {
             ThrowIfFailed(m_swapChain->GetBuffer(n, IID_PPV_ARGS(&m_renderTargets[n])));
@@ -221,6 +223,7 @@ void D3D12HelloFrameBuffering::LoadAssets()
 
     // Create synchronization objects.
     {
+        //为当前frame创建一个Fencevalue,
         ThrowIfFailed(m_device->CreateFence(m_fenceValues[m_frameIndex], D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&m_fence)));
         ++m_fenceValues[m_frameIndex];
 
@@ -252,6 +255,7 @@ void D3D12HelloFrameBuffering::OnRender()
     m_commandQueue->ExecuteCommandLists(_countof(ppCommandLists), ppCommandLists);
 
     // Present the frame.
+    //垂直同步，flag为0
     ThrowIfFailed(m_swapChain->Present(1, 0));
 
     MoveToNextFrame();
@@ -276,6 +280,7 @@ void D3D12HelloFrameBuffering::PopulateCommandList()
     // However, when ExecuteCommandList() is called on a particular command 
     // list, that command list can then be reset at any time and must be before 
     // re-recording.
+    // 一个CmdList，从多个帧的cmdAllocator分配命令
     ThrowIfFailed(m_commandList->Reset(m_commandAllocators[m_frameIndex].Get(), m_pipelineState.Get()));
 
     //Set necessary state
@@ -301,9 +306,10 @@ void D3D12HelloFrameBuffering::PopulateCommandList()
     ThrowIfFailed(m_commandList->Close());
 }
 
+//只在加载资源和退出时等待GPU
 void D3D12HelloFrameBuffering::WaitForGpu()
 {
-    //Schedule a Signal command in the queue
+    //ID3D12CommandQueue.Signal 设置GPU的fence值，使用ID3D12Fence::Signal设置CPU端的fence值
     ThrowIfFailed(m_commandQueue->Signal(m_fence.Get(), m_fenceValues[m_frameIndex]));
 
     // Wait until the fence has been processed.
@@ -317,15 +323,24 @@ void D3D12HelloFrameBuffering::WaitForGpu()
 void D3D12HelloFrameBuffering::MoveToNextFrame()
 {
     const UINT64 currentFenceValue = m_fenceValues[m_frameIndex];
+    //设置GPU端Fence值
     ThrowIfFailed(m_commandQueue->Signal(m_fence.Get(), currentFenceValue));
 
+    //后台fence值
     m_frameIndex = m_swapChain->GetCurrentBackBufferIndex();
 
-    if (m_fence->GetCompletedValue()< m_fenceValues[m_frameIndex])
+    //这里等待的已经是backBufferIndex的fence。和当前的currentFenceValue无关
+    if (m_fence->GetCompletedValue() < m_fenceValues[m_frameIndex])
     {
         ThrowIfFailed(m_fence->SetEventOnCompletion(m_fenceValues[m_frameIndex], m_fenceEvent));
+        //后台帧没完成还是要等的…，但是起码不等当前的了，毕竟当前的命令提交了
+        //GPU执行命令的时候，CPU可以直接提交下次的命令了
         WaitForSingleObjectEx(m_fenceEvent, INFINITE, FALSE);
     }
 
+    //设置这个后台的fence为刚刚提交的fence+1  ->
+    //下一帧开始时：
+    //当前的帧fence为要等待结束的提交的fence，即被等待
+    //currentFenceValue = 前台帧的fence值，此值在上上帧被更改，即那个frameIndex里被+1了。
     m_fenceValues[m_frameIndex] = currentFenceValue + 1;
 }
