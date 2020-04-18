@@ -29,6 +29,7 @@
     </ClCompile>
     <ClCompile Include="source\TestBundles.cpp" />
     <ClCompile Include="source\TestFrameBuffer.cpp" />
+    <ClCompile Include="source\TestTexture.cpp" />
     <ClCompile Include="source\Win32Application.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -38,6 +39,7 @@
     <ClInclude Include="header\stdafx.h" />
     <ClInclude Include="header\TestBundles.h" />
     <ClInclude Include="header\TestFrameBuffer.h" />
+    <ClInclude Include="header\TestTexture.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\CBufferTest.hlsl">
@@ -62,6 +64,13 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Shader\TestFrameBuffer.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Shader\TestTexture.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>

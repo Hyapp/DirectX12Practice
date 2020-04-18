@@ -54,6 +54,9 @@
     <ClCompile Include="source\Win32Application.cpp">
       <Filter>源文件\Basic</Filter>
     </ClCompile>
+    <ClCompile Include="source\TestTexture.cpp">
+      <Filter>源文件\DxMain</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header\stdafx.h">
@@ -74,6 +77,9 @@
     <ClInclude Include="header\TestFrameBuffer.h">
       <Filter>头文件\DxMain</Filter>
     </ClInclude>
+    <ClInclude Include="header\TestTexture.h">
+      <Filter>头文件\DxMain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\shader.hlsl">
@@ -86,6 +92,9 @@
       <Filter>资源文件</Filter>
     </FxCompile>
     <FxCompile Include="Shader\TestBundle.hlsl">
+      <Filter>资源文件</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\TestTexture.hlsl">
       <Filter>资源文件</Filter>
     </FxCompile>
   </ItemGroup>

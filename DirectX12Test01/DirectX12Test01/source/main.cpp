@@ -35,11 +35,20 @@
 //	return Win32Application::Run(&sample, hInstance, nCmdShow);
 //}
 
-#include<TestBundles.h>
+//#include<TestBundles.h>
+//
+//_Use_decl_annotations_
+//int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
+//{
+//	D3D12HellowBoundles sample(1280, 720, L"D3D12 Hello Bundle");
+//	return Win32Application::Run(&sample, hInstance, nCmdShow);
+//}'
+
+#include <TestTexture.h>
 
 _Use_decl_annotations_
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 {
-	D3D12HellowBoundles sample(1280, 720, L"D3D12 Hello Bundle");
+	D3D12HelloTexture sample(1280, 720, L"D3D12 Hello Texture");
 	return Win32Application::Run(&sample, hInstance, nCmdShow);
 }
