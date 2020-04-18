@@ -1,15 +1,13 @@
 #pragma once
-
 #include <DXSample.h>
 
 using namespace DirectX;
-
 using Microsoft::WRL::ComPtr;
 
-class D3D12HelloConstBuffer : public DXSample
+class D3D12HellowBoundles : public DXSample
 {
 public:
-	D3D12HelloConstBuffer(UINT width, UINT height, std::wstring title);
+	D3D12HellowBoundles(UINT width, UINT height, std::wstring title);
 
 	virtual void OnInit() override;
 	virtual void OnUpdate() override;
@@ -19,43 +17,32 @@ public:
 private:
 	static const UINT FrameCount = 2;
 
-	struct  Vertex
+	struct Vertex
 	{
 		XMFLOAT3 position;
 		XMFLOAT4 color;
 	};
 
-	struct  SceneConstantBuffer
-	{
-		XMFLOAT4 offset;
-	};
-
-	//Pipeline object
 	CD3DX12_VIEWPORT m_viewport;
-	CD3DX12_RECT m_scissorRect;
+	CD3DX12_RECT m_scissorRest;
 	ComPtr<IDXGISwapChain3> m_swapChain;
 	ComPtr<ID3D12Device> m_device;
-
-	//两帧资源需要两个RTV用来渲染
 	ComPtr<ID3D12Resource> m_renderTargets[FrameCount];
 	ComPtr<ID3D12CommandAllocator> m_commandAllocator;
+	//Bundle need depend allocator
+	ComPtr<ID3D12CommandAllocator> m_bundleAllocator;
 	ComPtr<ID3D12CommandQueue> m_commandQueue;
 	ComPtr<ID3D12RootSignature> m_rootSignature;
 	ComPtr<ID3D12DescriptorHeap> m_rtvHeap;
-	ComPtr<ID3D12DescriptorHeap> m_cbvHeap;
 	ComPtr<ID3D12PipelineState> m_pipelineState;
 	ComPtr<ID3D12GraphicsCommandList> m_commandList;
+	//Bundle need depend Cmdlist
+	ComPtr<ID3D12GraphicsCommandList> m_bundle;
 	UINT m_rtvDescriptorSize;
 
-	//App resoureces
 	ComPtr<ID3D12Resource> m_vertexBuffer;
 	D3D12_VERTEX_BUFFER_VIEW m_vertexBufferView;
-	//CB需要ID3D12Resource接口，需要保存GPU的指针
-	ComPtr<ID3D12Resource> m_constantBuffer;
-	SceneConstantBuffer m_constantBufferData;
-	UINT8* m_pCbvDataBegin;
 
-	//Synchronization objects
 	UINT m_frameIndex;
 	HANDLE m_fenceEvent;
 	ComPtr<ID3D12Fence> m_fence;

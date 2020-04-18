@@ -6,4 +6,5 @@
 
 ## 绘制三角形
 ## 使用上传堆和Constant Buffer
-## 抄写FrameBuffering
+## 使用FrameBuffer
+## 使用Bundle

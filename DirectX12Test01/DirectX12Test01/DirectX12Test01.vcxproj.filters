@@ -13,48 +13,66 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="源文件\DxMain">
+      <UniqueIdentifier>{d843b28f-6d94-4aa8-9bfb-e0e238f69cfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Basic">
+      <UniqueIdentifier>{f994b0fa-9dec-451a-8545-c433cdbbc2a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Basic">
+      <UniqueIdentifier>{90d02ffe-7776-4388-8ca9-8ce25d452821}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\DxMain">
+      <UniqueIdentifier>{8d2b5bc8-4f07-42ea-a920-e43a7f4490c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\DirectX12Test01.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="source\DXSample.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="source\main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="source\stdafx.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="source\ConstBuffer.cpp">
+      <Filter>源文件\DxMain</Filter>
     </ClCompile>
-    <ClCompile Include="source\Win32Application.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="source\DirectX12Test01.cpp">
+      <Filter>源文件\DxMain</Filter>
     </ClCompile>
     <ClCompile Include="source\hellowTriangle.cpp">
-      <Filter>源文件</Filter>
+      <Filter>源文件\DxMain</Filter>
     </ClCompile>
-    <ClCompile Include="source\ConstBuffer.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="source\TestBundles.cpp">
+      <Filter>源文件\DxMain</Filter>
     </ClCompile>
     <ClCompile Include="source\TestFrameBuffer.cpp">
-      <Filter>源文件</Filter>
+      <Filter>源文件\DxMain</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DXSample.cpp">
+      <Filter>源文件\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="source\stdafx.cpp">
+      <Filter>源文件\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Win32Application.cpp">
+      <Filter>源文件\Basic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="header\DirectX12Test01.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="header\hellowTriangle.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="header\stdafx.h">
+      <Filter>头文件\Basic</Filter>
     </ClInclude>
     <ClInclude Include="header\ConstBuffer.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\DxMain</Filter>
     </ClInclude>
-    <ClInclude Include="header\stdafx.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="header\DirectX12Test01.h">
+      <Filter>头文件\DxMain</Filter>
+    </ClInclude>
+    <ClInclude Include="header\hellowTriangle.h">
+      <Filter>头文件\DxMain</Filter>
+    </ClInclude>
+    <ClInclude Include="header\TestBundles.h">
+      <Filter>头文件\DxMain</Filter>
     </ClInclude>
     <ClInclude Include="header\TestFrameBuffer.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\DxMain</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -65,6 +83,9 @@
       <Filter>资源文件</Filter>
     </FxCompile>
     <FxCompile Include="Shader\TestFrameBuffer.hlsl">
+      <Filter>资源文件</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\TestBundle.hlsl">
       <Filter>资源文件</Filter>
     </FxCompile>
   </ItemGroup>
