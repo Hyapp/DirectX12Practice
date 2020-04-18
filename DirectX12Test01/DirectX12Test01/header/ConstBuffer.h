@@ -35,6 +35,7 @@ private:
 	CD3DX12_RECT m_scissorRect;
 	ComPtr<IDXGISwapChain3> m_swapChain;
 	ComPtr<ID3D12Device> m_device;
+	//两帧资源需要两个RTV用来渲染
 	ComPtr<ID3D12Resource> m_renderTargets[FrameCount];
 	ComPtr<ID3D12CommandAllocator> m_commandAllocator;
 	ComPtr<ID3D12CommandQueue> m_commandQueue;
@@ -48,6 +49,7 @@ private:
 	//App resoureces
 	ComPtr<ID3D12Resource> m_vertexBuffer;
 	D3D12_VERTEX_BUFFER_VIEW m_vertexBufferView;
+	//CB需要ID3D12Resource接口，需要保存GPU的指针
 	ComPtr<ID3D12Resource> m_constantBuffer;
 	SceneConstantBuffer m_constantBufferData;
 	UINT8* m_pCbvDataBegin;

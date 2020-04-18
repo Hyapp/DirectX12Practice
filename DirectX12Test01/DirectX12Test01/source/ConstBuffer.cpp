@@ -69,6 +69,7 @@ void D3D12HelloConstBuffer::LoadPipeline()
 
 	//Describe and create the swap chain;
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc = {};
+	//SwapChain 里面包含了有多少个帧以及帧的信息
 	swapChainDesc.BufferCount = FrameCount;
 	swapChainDesc.Width = m_width;
 	swapChainDesc.Height = m_height;
@@ -88,13 +89,13 @@ void D3D12HelloConstBuffer::LoadPipeline()
 	));
 
 	ThrowIfFailed(factory->MakeWindowAssociation(Win32Application::GetHwnd(), DXGI_MWA_NO_ALT_ENTER));
-
+	//用as赋值
 	ThrowIfFailed(swapChain.As(&m_swapChain));
 	m_frameIndex = m_swapChain->GetCurrentBackBufferIndex();
 
 	//Create descriptor heaps;
 	{
-		//rtv
+		//rtv的描述符堆，描述rtv的信息
 		D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc = {};
 		rtvHeapDesc.NumDescriptors = FrameCount;
 		rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
@@ -104,7 +105,7 @@ void D3D12HelloConstBuffer::LoadPipeline()
 
 		m_rtvDescriptorSize = m_device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
-		//cbv
+		//cbv的描述符堆，描述了CBV信息
 		D3D12_DESCRIPTOR_HEAP_DESC cbvHeapDesc = {};
 		cbvHeapDesc.NumDescriptors = 1;
 		cbvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
@@ -114,6 +115,7 @@ void D3D12HelloConstBuffer::LoadPipeline()
 
 	//Create a RTV for each frame
 	{
+		//rtvHeap里有CPU端的描述符堆顶handle，因为同一个swapChain里的rtv除了帧数量其它都一样？？？
 		CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(m_rtvHeap->GetCPUDescriptorHandleForHeapStart());
 		for (UINT i = 0; i < FrameCount; i++)
 		{
@@ -143,6 +145,7 @@ void D3D12HelloConstBuffer::LoadAssets()
 		CD3DX12_ROOT_PARAMETER1 rootParameters[1];
 
 		ranges[0].Init(D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1, 0, 0, D3D12_DESCRIPTOR_RANGE_FLAG_DATA_STATIC);
+		//初始化根签名表，这里已经不是直接写进根签名了
 		rootParameters[0].InitAsDescriptorTable(1, &ranges[0], D3D12_SHADER_VISIBILITY_VERTEX);
 
 		D3D12_ROOT_SIGNATURE_FLAGS rootSignatureFlags =
@@ -157,6 +160,7 @@ void D3D12HelloConstBuffer::LoadAssets()
 
 		ComPtr<ID3DBlob> signature;
 		ComPtr<ID3DBlob> error;
+		//序列化大概是为此准备buffer资源？？？
 		ThrowIfFailed(D3DX12SerializeVersionedRootSignature(&rootSignatureDesc, featureData.HighestVersion, &signature, &error));
 		ThrowIfFailed(m_device->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&m_rootSignature)));
 	}
@@ -223,7 +227,7 @@ void D3D12HelloConstBuffer::LoadAssets()
 		};
 
 		const UINT vertexBufferSize = sizeof(triangleVertices);
-
+		//还是用upload_heap传数据…，反正这个数据确实是不变的
 		ThrowIfFailed(m_device->CreateCommittedResource(
 			&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
 			D3D12_HEAP_FLAG_NONE,
@@ -246,6 +250,7 @@ void D3D12HelloConstBuffer::LoadAssets()
 	}
 
 	//Create the constant buffer.
+	//使用上传堆上传CB
 	{
 		ThrowIfFailed(m_device->CreateCommittedResource(
 			&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
@@ -293,6 +298,7 @@ void D3D12HelloConstBuffer::OnUpdate()
 	{
 		m_constantBufferData.offset.x = -offsetBounds;
 	}
+	//没UnMap.持续性往里面写数据
 	memcpy(m_pCbvDataBegin, &m_constantBufferData, sizeof(m_constantBufferData));
 }
 
@@ -310,6 +316,7 @@ void D3D12HelloConstBuffer::OnRender()
 
 void D3D12HelloConstBuffer::OnDestroy()
 {
+	//好像就不用管UnMap了？？？
 	WaitForPreviousFrame();
 
 	CloseHandle(m_fenceEvent);
@@ -334,10 +341,11 @@ void D3D12HelloConstBuffer::PopulateCommandList()
 	//Indicate that the back buffer will be used as a render target.
 	m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_renderTargets[m_frameIndex].Get(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
 
+	//rtvHeap的Handle直接获取到CPU端Handle，再引用到GPU显存用的…
 	CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(m_rtvHeap->GetCPUDescriptorHandleForHeapStart(), m_frameIndex, m_rtvDescriptorSize);
 	m_commandList->OMSetRenderTargets(1, &rtvHandle, FALSE, nullptr);
 
-	//Record commands.
+	//设完了就可以开始画了。。。
 	const float clearColor[] = { 0.0f,0.0f,0.0f,1.0f };
 	m_commandList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
 	m_commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
