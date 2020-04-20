@@ -167,6 +167,8 @@ void D3D12HelloTexture::LoadAssets()
         
         ComPtr<ID3DBlob> signature;
         ComPtr<ID3DBlob> error;
+
+        //根签名先序列化，然后从signature里创建
         ThrowIfFailed(D3DX12SerializeVersionedRootSignature(&rootSignatureDesc, featureData.HighestVersion, &signature, &error));
         ThrowIfFailed(m_device->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&m_rootSignature)));
     }
@@ -215,8 +217,8 @@ void D3D12HelloTexture::LoadAssets()
         //Define the geometry for a triangle
         Vertex triangleVertices[] =
         {
-            {{0.0f,0.25f * m_aspectRatio, 0.0f},{0.5f, 0.0f}},
-            { { 0.25f, -0.25f * m_aspectRatio, 0.0f }, { 1.0f, 1.0f } },
+            { {  0.0f,   0.25f * m_aspectRatio, 0.0f }, { 0.5f, 0.0f } },
+            { {  0.25f, -0.25f * m_aspectRatio, 0.0f }, { 1.0f, 1.0f } },
             { { -0.25f, -0.25f * m_aspectRatio, 0.0f }, { 0.0f, 1.0f } }
         };
 
@@ -243,7 +245,7 @@ void D3D12HelloTexture::LoadAssets()
         m_vertexBufferView.SizeInBytes = vertexBufferSize;
     }
 
-    //ComPtr are CPU obj, but this resource needs to stay in scope until
+    // ComPtr are CPU obj, but this resource needs to stay in scope until
     // the command list that references it has finished executing on the GPU.
     // We will flush the GPU at the end of this method to ensure the resource
     // is prematurely destroyed.
@@ -261,6 +263,8 @@ void D3D12HelloTexture::LoadAssets()
         textureDesc.SampleDesc.Quality = 0;
         textureDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 
+
+        //先一个DEFAULT堆，TextureDesc里面有大小了
         ThrowIfFailed(m_device->CreateCommittedResource(
             &CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
             D3D12_HEAP_FLAG_NONE,
@@ -288,8 +292,10 @@ void D3D12HelloTexture::LoadAssets()
         textureData.pData = texture.data();
         textureData.RowPitch = TextureWidth * TexturePixelSize;
         textureData.SlicePitch = textureData.RowPitch * TextureHeight;
-
+        
+        //使用此函数向GPU上传数据
         UpdateSubresources(m_commandList.Get(), m_texture.Get(), textureUploadHeap.Get(), 0, 0, 1, &textureData);
+        //资源转换
         m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_texture.Get(), D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
 
         D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
@@ -327,8 +333,8 @@ void D3D12HelloTexture::LoadAssets()
 std::vector<UINT8> D3D12HelloTexture::GenerateTextureData()
 {
     const UINT rowPitch = TextureWidth * TexturePixelSize;
-    const UINT cellPitch = rowPitch >> 3;
-    const UINT cellHeight = TextureWidth >> 3;
+    const UINT cellPitch = rowPitch >> 5;
+    const UINT cellHeight = TextureWidth >> 5;
     const UINT textureSize = rowPitch * TextureHeight;
 
     std::vector<UINT8> data(textureSize);
@@ -407,6 +413,7 @@ void D3D12HelloTexture::PopulateCommandList()
     ID3D12DescriptorHeap* ppHeap[] = { m_srvHeap.Get() };
     m_commandList->SetDescriptorHeaps(_countof(ppHeap), ppHeap);
 
+    //svr 的根描述表
     m_commandList->SetGraphicsRootDescriptorTable(0, m_srvHeap->GetGPUDescriptorHandleForHeapStart());
     m_commandList->RSSetViewports(1, &m_viewport);
     m_commandList->RSSetScissorRects(1, &m_scissorRect);
