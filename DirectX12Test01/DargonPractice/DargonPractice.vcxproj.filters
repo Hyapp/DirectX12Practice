@@ -16,30 +16,86 @@
     <Filter Include="源文件\Main">
       <UniqueIdentifier>{e0a2e5d2-86fa-47ac-8e44-e021f2a8316f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Main">
+      <UniqueIdentifier>{94f6e51c-b818-45a9-99c1-bc9b36b746d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Comman">
+      <UniqueIdentifier>{01156277-791e-416f-a564-706f252b9188}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Comman">
+      <UniqueIdentifier>{9b51cc19-5270-4bf7-b5d0-1b0b833ac3b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="header\Init.h">
+      <Filter>头文件\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="header\Box_C6.h">
+      <Filter>头文件\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\DargonInclude\Camera.h">
+      <Filter>头文件\Comman</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\DargonInclude\d3dApp.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\Comman</Filter>
     </ClInclude>
     <ClInclude Include="..\..\DargonInclude\d3dUtil.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\Comman</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\DargonInclude\d3dx12.h">
+      <Filter>头文件\Comman</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\DargonInclude\DDSTextureLoader.h">
+      <Filter>头文件\Comman</Filter>
     </ClInclude>
     <ClInclude Include="..\..\DargonInclude\GameTimer.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\Comman</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\DargonInclude\GeometryGenerator.h">
+      <Filter>头文件\Comman</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\DargonInclude\MathHelper.h">
+      <Filter>头文件\Comman</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\DargonInclude\UploadBuffer.h">
+      <Filter>头文件\Comman</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\DargonInclude\d3dApp.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\DargonInclude\d3dUtil.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\DargonInclude\GameTimer.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Init.cpp">
+    <ClCompile Include="source\Init.cpp">
       <Filter>源文件\Main</Filter>
     </ClCompile>
+    <ClCompile Include="Box_C6.cpp">
+      <Filter>源文件\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DargonInclude\Camera.cpp">
+      <Filter>源文件\Comman</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DargonInclude\d3dApp.cpp">
+      <Filter>源文件\Comman</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DargonInclude\d3dUtil.cpp">
+      <Filter>源文件\Comman</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DargonInclude\DDSTextureLoader.cpp">
+      <Filter>源文件\Comman</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DargonInclude\GameTimer.cpp">
+      <Filter>源文件\Comman</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DargonInclude\GeometryGenerator.cpp">
+      <Filter>源文件\Comman</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DargonInclude\MathHelper.cpp">
+      <Filter>源文件\Comman</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="shader\Box_C6.hlsl">
+      <Filter>资源文件</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

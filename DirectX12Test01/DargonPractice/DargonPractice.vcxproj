@@ -71,7 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>H:\DirectX12Test\DirectX12Practice\DargonInclude;$(IncludePath)</IncludePath>
+    <IncludePath>H:\DirectX12Test\DirectX12Practice\DargonInclude;H:\DirectX12Test\DirectX12Practice\DirectX12Test01\DargonPractice\header;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -139,15 +139,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\DargonInclude\Camera.h" />
     <ClInclude Include="..\..\DargonInclude\d3dApp.h" />
     <ClInclude Include="..\..\DargonInclude\d3dUtil.h" />
+    <ClInclude Include="..\..\DargonInclude\d3dx12.h" />
+    <ClInclude Include="..\..\DargonInclude\DDSTextureLoader.h" />
     <ClInclude Include="..\..\DargonInclude\GameTimer.h" />
+    <ClInclude Include="..\..\DargonInclude\GeometryGenerator.h" />
+    <ClInclude Include="..\..\DargonInclude\MathHelper.h" />
+    <ClInclude Include="..\..\DargonInclude\UploadBuffer.h" />
+    <ClInclude Include="header\Box_C6.h" />
+    <ClInclude Include="header\Init.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\DargonInclude\Camera.cpp" />
     <ClCompile Include="..\..\DargonInclude\d3dApp.cpp" />
     <ClCompile Include="..\..\DargonInclude\d3dUtil.cpp" />
+    <ClCompile Include="..\..\DargonInclude\DDSTextureLoader.cpp" />
     <ClCompile Include="..\..\DargonInclude\GameTimer.cpp" />
-    <ClCompile Include="Init.cpp" />
+    <ClCompile Include="..\..\DargonInclude\GeometryGenerator.cpp" />
+    <ClCompile Include="..\..\DargonInclude\MathHelper.cpp" />
+    <ClCompile Include="Box_C6.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="source\Init.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="shader\Box_C6.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
