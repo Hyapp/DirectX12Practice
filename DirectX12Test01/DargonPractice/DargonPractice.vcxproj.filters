@@ -25,6 +25,12 @@
     <Filter Include="源文件\Comman">
       <UniqueIdentifier>{9b51cc19-5270-4bf7-b5d0-1b0b833ac3b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Misc">
+      <UniqueIdentifier>{91ffaad8-69fb-4eaf-9b57-63681bd49a2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Misc">
+      <UniqueIdentifier>{d05ea699-4804-4710-b89f-bc8e49d5b546}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header\Init.h">
@@ -60,15 +66,15 @@
     <ClInclude Include="..\..\DargonInclude\UploadBuffer.h">
       <Filter>头文件\Comman</Filter>
     </ClInclude>
+    <ClInclude Include="header\Shapes_C7.h">
+      <Filter>头文件\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="header\FrameResource.h">
+      <Filter>头文件\Misc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Init.cpp">
-      <Filter>源文件\Main</Filter>
-    </ClCompile>
-    <ClCompile Include="Box_C6.cpp">
-      <Filter>源文件\Main</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
       <Filter>源文件\Main</Filter>
     </ClCompile>
     <ClCompile Include="..\..\DargonInclude\Camera.cpp">
@@ -92,9 +98,24 @@
     <ClCompile Include="..\..\DargonInclude\MathHelper.cpp">
       <Filter>源文件\Comman</Filter>
     </ClCompile>
+    <ClCompile Include="source\Box_C6.cpp">
+      <Filter>源文件\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="source\main.cpp">
+      <Filter>源文件\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Shapes_C7.cpp">
+      <Filter>源文件\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FrameResource.cpp">
+      <Filter>源文件\Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\Box_C6.hlsl">
+      <Filter>资源文件</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\Shapes_C7.hlsl">
       <Filter>资源文件</Filter>
     </FxCompile>
   </ItemGroup>
