@@ -1,4 +1,4 @@
-#include <stdafx.h>
+ï»¿#include <stdafx.h>
 #include <ConstBuffer.h>
 
 D3D12HelloConstBuffer::D3D12HelloConstBuffer(UINT width, UINT height, std::wstring title) :
@@ -8,7 +8,7 @@ D3D12HelloConstBuffer::D3D12HelloConstBuffer(UINT width, UINT height, std::wstri
 	m_scissorRect(0, 0, static_cast<LONG>(width), static_cast<LONG>(height)),
 	m_rtvDescriptorSize(0),
 	m_pCbvDataBegin(nullptr),
-	m_constantBufferData {}
+	m_constantBufferData{}
 {}
 
 void D3D12HelloConstBuffer::OnInit()
@@ -69,7 +69,7 @@ void D3D12HelloConstBuffer::LoadPipeline()
 
 	//Describe and create the swap chain;
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc = {};
-	//SwapChain ÀïÃæ°üº¬ÁËÓĞ¶àÉÙ¸öÖ¡ÒÔ¼°Ö¡µÄĞÅÏ¢
+	//SwapChain é‡Œé¢åŒ…å«äº†æœ‰å¤šå°‘äº¤æ¢RT,deviceä½¿ç”¨RTV Heap å¼•ç”¨äº†äº¤æ¢é“¾ä¸Šçš„RT
 	swapChainDesc.BufferCount = FrameCount;
 	swapChainDesc.Width = m_width;
 	swapChainDesc.Height = m_height;
@@ -89,23 +89,24 @@ void D3D12HelloConstBuffer::LoadPipeline()
 	));
 
 	ThrowIfFailed(factory->MakeWindowAssociation(Win32Application::GetHwnd(), DXGI_MWA_NO_ALT_ENTER));
-	//ÓÃas¸³Öµ
+	//ç”¨asèµ‹å€¼
 	ThrowIfFailed(swapChain.As(&m_swapChain));
 	m_frameIndex = m_swapChain->GetCurrentBackBufferIndex();
 
 	//Create descriptor heaps;
 	{
-		//rtvµÄÃèÊö·û¶Ñ£¬ÃèÊörtvµÄĞÅÏ¢
+		//rtvçš„æè¿°ç¬¦å †ï¼Œæè¿°rtvçš„ä¿¡æ¯
 		D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc = {};
 		rtvHeapDesc.NumDescriptors = FrameCount;
 		rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 		rtvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 
+		// deviceåˆ›å»º rtvæè¿°ç¬¦ã€‚
 		ThrowIfFailed(m_device->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(&m_rtvHeap)));
-
+		// æ¯ä¸ªæè¿°ç¬¦çš„å¤§å°
 		m_rtvDescriptorSize = m_device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
-		//cbvµÄÃèÊö·û¶Ñ£¬ÃèÊöÁËCBVĞÅÏ¢
+		//cbvçš„æè¿°ç¬¦å †ï¼Œæè¿°äº†CBVä¿¡æ¯
 		D3D12_DESCRIPTOR_HEAP_DESC cbvHeapDesc = {};
 		cbvHeapDesc.NumDescriptors = 1;
 		cbvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
@@ -115,11 +116,13 @@ void D3D12HelloConstBuffer::LoadPipeline()
 
 	//Create a RTV for each frame
 	{
-		//rtvHeapÀïÓĞCPU¶ËµÄÃèÊö·û¶Ñ¶¥handle£¬ÒòÎªÍ¬Ò»¸öswapChainÀïµÄrtv³ıÁËÖ¡ÊıÁ¿ÆäËü¶¼Ò»Ñù£¿£¿£¿
+		// rtvHandleæ˜¯ä»m_rtvHeapä¸­è·å–åˆ°çš„CPU Handleåœ°å€ï¼Œ
 		CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(m_rtvHeap->GetCPUDescriptorHandleForHeapStart());
 		for (UINT i = 0; i < FrameCount; i++)
 		{
+			// RTæœ¬èº«å±äºswapChain, è€Œédevice
 			ThrowIfFailed(m_swapChain->GetBuffer(i, IID_PPV_ARGS(&m_renderTargets[i])));
+			// deviceç»™è‡ªå·±çš„rtvHeapèµ‹å€¼ï¼Œå€¼ä¸ºäº¤æ¢é“¾çš„RTbuffer.
 			m_device->CreateRenderTargetView(m_renderTargets[i].Get(), nullptr, rtvHandle);
 			rtvHandle.Offset(1, m_rtvDescriptorSize);
 		}
@@ -133,7 +136,7 @@ void D3D12HelloConstBuffer::LoadAssets()
 	//Create a root signature consisting of a descriptor table with a single CBV.
 	{
 		D3D12_FEATURE_DATA_ROOT_SIGNATURE featureData = {};
-		
+
 		featureData.HighestVersion = D3D_ROOT_SIGNATURE_VERSION_1_1;
 
 		if (FAILED(m_device->CheckFeatureSupport(D3D12_FEATURE_ROOT_SIGNATURE, &featureData, sizeof(featureData))))
@@ -145,7 +148,7 @@ void D3D12HelloConstBuffer::LoadAssets()
 		CD3DX12_ROOT_PARAMETER1 rootParameters[1];
 
 		ranges[0].Init(D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1, 0, 0, D3D12_DESCRIPTOR_RANGE_FLAG_DATA_STATIC);
-		//³õÊ¼»¯¸ùÇ©Ãû±í£¬ÕâÀïÒÑ¾­²»ÊÇÖ±½ÓĞ´½ø¸ùÇ©ÃûÁË
+		//åˆå§‹åŒ–æ ¹ç­¾åè¡¨ï¼Œè¿™é‡Œå·²ç»ä¸æ˜¯ç›´æ¥å†™è¿›æ ¹ç­¾åäº†
 		rootParameters[0].InitAsDescriptorTable(1, &ranges[0], D3D12_SHADER_VISIBILITY_VERTEX);
 
 		D3D12_ROOT_SIGNATURE_FLAGS rootSignatureFlags =
@@ -160,7 +163,7 @@ void D3D12HelloConstBuffer::LoadAssets()
 
 		ComPtr<ID3DBlob> signature;
 		ComPtr<ID3DBlob> error;
-		//ĞòÁĞ»¯´ó¸ÅÊÇÎª´Ë×¼±¸buffer×ÊÔ´£¿£¿£¿
+		// dx12 æ ¹ç­¾åå¿…é¡»å…ˆè¢«åºåˆ—åŒ–æ‰èƒ½åˆ›å»º
 		ThrowIfFailed(D3DX12SerializeVersionedRootSignature(&rootSignatureDesc, featureData.HighestVersion, &signature, &error));
 		ThrowIfFailed(m_device->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&m_rootSignature)));
 	}
@@ -227,7 +230,7 @@ void D3D12HelloConstBuffer::LoadAssets()
 		};
 
 		const UINT vertexBufferSize = sizeof(triangleVertices);
-		//»¹ÊÇÓÃupload_heap´«Êı¾İ¡­£¬·´ÕıÕâ¸öÊı¾İÈ·ÊµÊÇ²»±äµÄ
+		// deviceåˆ›å»ºä¸€æ®µé¡¶ç‚¹å¤§å°çš„bufferï¼Œç±»å‹ä¸ºä¸Šä¼ åªè¯»
 		ThrowIfFailed(m_device->CreateCommittedResource(
 			&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
 			D3D12_HEAP_FLAG_NONE,
@@ -237,6 +240,7 @@ void D3D12HelloConstBuffer::LoadAssets()
 			IID_PPV_ARGS(&m_vertexBuffer)
 		));
 
+		// é€šè¿‡æ˜ å°„è‡³RAMï¼Œç›´æ¥å¤åˆ¶åˆ°RAMä¼šåŒæ­¥è‡³VRAMã€‚
 		UINT8* pVertexDataBegin;
 		CD3DX12_RANGE rendRange(0, 0);
 		ThrowIfFailed(m_vertexBuffer->Map(0, &rendRange, reinterpret_cast<void**>(&pVertexDataBegin)));
@@ -244,14 +248,16 @@ void D3D12HelloConstBuffer::LoadAssets()
 		m_vertexBuffer->Unmap(0, nullptr);
 
 		//Initialize the vertex buffer view.
+		// æ¸²æŸ“æ•°æ®è¢«Unmapä¹‹åï¼Œè¿™äº›ç¼“å†²åŒºéœ€è¦ç›´æ¥æ‹¿åˆ°GPUåœ°å€æä¾›ç»™cmdå»æ¸²æŸ“ã€‚ï¼Ÿ
 		m_vertexBufferView.BufferLocation = m_vertexBuffer->GetGPUVirtualAddress();
 		m_vertexBufferView.StrideInBytes = sizeof(Vertex);
 		m_vertexBufferView.SizeInBytes = vertexBufferSize;
 	}
 
 	//Create the constant buffer.
-	//Ê¹ÓÃÉÏ´«¶ÑÉÏ´«CB
+	//ä½¿ç”¨ä¸Šä¼ å †ä¸Šä¼ CB
 	{
+		// device åˆ›å»ºä¸€ä¸ªå¤§å°æœª1024*64å¤§å°çš„buffer ä¸ºGPUåªè¯»ä¸Šä¼ ç±»å‹
 		ThrowIfFailed(m_device->CreateCommittedResource(
 			&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
 			D3D12_HEAP_FLAG_NONE,
@@ -261,9 +267,12 @@ void D3D12HelloConstBuffer::LoadAssets()
 			IID_PPV_ARGS(&m_constantBuffer)));
 
 		//Describe and create a constant buffer view.
+		// deviceä½¿ç”¨cbvDescæ¥å…³è”åˆ›å»ºçš„bufferå’Œcbv æè¿°ç¬¦ï¼Œä½¿å¾—æè¿°ç¬¦æè¿°äº†è¿™ä¸ªbuffer
 		D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc = {};
+		// ç›´æ¥å­˜äº†GPU VirtualAddress,è®¾åˆ°RAMï¼Ÿ
 		cbvDesc.BufferLocation = m_constantBuffer->GetGPUVirtualAddress();
 		cbvDesc.SizeInBytes = (sizeof(SceneConstantBuffer) + 255) & ~255; //CB size is required to be 256-byte aligned.
+		// æè¿°ç¬¦æœ‰CPUç«¯å’ŒGPUç«¯ï¼Ÿï¼Ÿï¼ŸWhyï¼Ÿ
 		m_device->CreateConstantBufferView(&cbvDesc, m_cbvHeap->GetCPUDescriptorHandleForHeapStart());
 
 		//Map and initialize the constant buffer. We don't unmap this until the app closes.
@@ -298,7 +307,7 @@ void D3D12HelloConstBuffer::OnUpdate()
 	{
 		m_constantBufferData.offset.x = -offsetBounds;
 	}
-	//Ã»UnMap.³ÖĞøĞÔÍùÀïÃæĞ´Êı¾İ
+	//æ²¡UnMap.æŒç»­æ€§å¾€é‡Œé¢å†™æ•°æ®
 	memcpy(m_pCbvDataBegin, &m_constantBufferData, sizeof(m_constantBufferData));
 }
 
@@ -316,7 +325,7 @@ void D3D12HelloConstBuffer::OnRender()
 
 void D3D12HelloConstBuffer::OnDestroy()
 {
-	//ºÃÏñ¾Í²»ÓÃ¹ÜUnMapÁË£¿£¿£¿
+	//å¥½åƒå°±ä¸ç”¨ç®¡UnMapäº†ï¼Ÿï¼Ÿï¼Ÿ
 	WaitForPreviousFrame();
 
 	CloseHandle(m_fenceEvent);
@@ -330,10 +339,11 @@ void D3D12HelloConstBuffer::PopulateCommandList()
 
 	//Set necessary state.
 	m_commandList->SetGraphicsRootSignature(m_rootSignature.Get());
-	
+
 	ID3D12DescriptorHeap* ppHeaps[] = { m_cbvHeap.Get() };
 	m_commandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 
+	// cbvç›´æ¥å¼•ç”¨GPUçš„æè¿°ç¬¦
 	m_commandList->SetGraphicsRootDescriptorTable(0, m_cbvHeap->GetGPUDescriptorHandleForHeapStart());
 	m_commandList->RSSetViewports(1, &m_viewport);
 	m_commandList->RSSetScissorRects(1, &m_scissorRect);
@@ -341,11 +351,11 @@ void D3D12HelloConstBuffer::PopulateCommandList()
 	//Indicate that the back buffer will be used as a render target.
 	m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_renderTargets[m_frameIndex].Get(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
 
-	//rtvHeapµÄHandleÖ±½Ó»ñÈ¡µ½CPU¶ËHandle£¬ÔÙÒıÓÃµ½GPUÏÔ´æÓÃµÄ¡­
+	//rtvHeapå¼•ç”¨çš„æ˜¯SwapChainçš„èµ„æºï¼Œå¯æ˜¯è¿™å¿…é¡»æ˜¯CPUæ‰€æè¿°çš„ï¼Ÿï¼Ÿï¼Ÿ
 	CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(m_rtvHeap->GetCPUDescriptorHandleForHeapStart(), m_frameIndex, m_rtvDescriptorSize);
 	m_commandList->OMSetRenderTargets(1, &rtvHandle, FALSE, nullptr);
 
-	//ÉèÍêÁË¾Í¿ÉÒÔ¿ªÊ¼»­ÁË¡£¡£¡£
+	//è®¾å®Œäº†å°±å¯ä»¥å¼€å§‹ç”»äº†ã€‚ã€‚ã€‚
 	const float clearColor[] = { 0.0f,0.0f,0.0f,1.0f };
 	m_commandList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
 	m_commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

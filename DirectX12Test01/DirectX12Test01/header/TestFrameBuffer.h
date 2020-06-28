@@ -15,6 +15,8 @@ public:
     virtual void OnRender();
     virtual void OnDestroy();
 
+    virtual void OnKeyDown(UINT8) override;
+
 private:
     static const UINT FrameCount = 2;
 
@@ -53,4 +55,8 @@ private:
     void PopulateCommandList();
     void MoveToNextFrame();
     void WaitForGpu();
+
+    std::ofstream m_log_os;
+    std::chrono::high_resolution_clock::time_point m_start_time;
+    unsigned int m_fps_counter = 0;
 };

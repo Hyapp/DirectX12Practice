@@ -33,9 +33,6 @@
     <ClCompile Include="source\ConstBuffer.cpp">
       <Filter>源文件\DxMain</Filter>
     </ClCompile>
-    <ClCompile Include="source\DirectX12Test01.cpp">
-      <Filter>源文件\DxMain</Filter>
-    </ClCompile>
     <ClCompile Include="source\hellowTriangle.cpp">
       <Filter>源文件\DxMain</Filter>
     </ClCompile>
@@ -57,15 +54,15 @@
     <ClCompile Include="source\TestTexture.cpp">
       <Filter>源文件\DxMain</Filter>
     </ClCompile>
+    <ClCompile Include="source\HelloWindow.cpp">
+      <Filter>源文件\DxMain</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header\stdafx.h">
       <Filter>头文件\Basic</Filter>
     </ClInclude>
     <ClInclude Include="header\ConstBuffer.h">
-      <Filter>头文件\DxMain</Filter>
-    </ClInclude>
-    <ClInclude Include="header\DirectX12Test01.h">
       <Filter>头文件\DxMain</Filter>
     </ClInclude>
     <ClInclude Include="header\hellowTriangle.h">
@@ -79,6 +76,12 @@
     </ClInclude>
     <ClInclude Include="header\TestTexture.h">
       <Filter>头文件\DxMain</Filter>
+    </ClInclude>
+    <ClInclude Include="header\HelloWindow.h">
+      <Filter>头文件\DxMain</Filter>
+    </ClInclude>
+    <ClInclude Include="header\KeyNum.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

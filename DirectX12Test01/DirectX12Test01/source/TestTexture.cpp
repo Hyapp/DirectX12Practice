@@ -8,6 +8,7 @@ D3D12HelloTexture::D3D12HelloTexture(UINT width, UINT height, std::wstring name)
     m_scissorRect(0,0,static_cast<LONG>(width), static_cast<LONG>(height)),
     m_rtvDescriptorSize(0)
 {
+    m_log_os.open(R"(C:\Users\dell\Desktop\log.txt)", std::ios::app);
 }
 
 void D3D12HelloTexture::OnInit()
@@ -457,4 +458,9 @@ void D3D12HelloTexture::WaitForPreviousFrame()
     }
 
     m_frameIndex = m_swapChain->GetCurrentBackBufferIndex();
+}
+
+void D3D12HelloTexture::OnKeyDown(UINT8 key)
+{
+    m_log_os << key << std::endl;
 }

@@ -1,5 +1,5 @@
 ﻿#include <stdafx.h>
-#include <DirectX12Test01.h>
+#include <HelloWindow.h>
 
 D3D12HelloWindow::D3D12HelloWindow(UINT width, UINT height, std::wstring name) :
     DXSample(width, height, name),

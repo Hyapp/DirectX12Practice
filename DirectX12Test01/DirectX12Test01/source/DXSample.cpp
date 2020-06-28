@@ -78,3 +78,9 @@ void DXSample::ParseCommandLineArgs(WCHAR* argv[], int argc)
         }
     }
 }
+
+void DXSample::OnKeyDown(UINT8 t)
+{}
+
+void DXSample::OnKeyUp(UINT8 t)
+{}

@@ -1,5 +1,6 @@
 #include <stdafx.h>
 #include <TestFrameBuffer.h>
+#include <KeyNum.h>
 
 D3D12HelloFrameBuffering::D3D12HelloFrameBuffering(UINT width, UINT height, std::wstring name) :
     DXSample(width, height, name),
@@ -8,7 +9,9 @@ D3D12HelloFrameBuffering::D3D12HelloFrameBuffering(UINT width, UINT height, std:
     m_scissorRect(0, 0, static_cast<LONG>(width), static_cast<LONG>(height)),
     m_fenceValues{},
     m_rtvDescriptorSize(0)
-{}
+{
+    m_log_os.open(R"(C:\Users\dell\Desktop\log.txt)", std::ios::app);
+}
 
 void D3D12HelloFrameBuffering::OnInit()
 {
@@ -247,6 +250,15 @@ void D3D12HelloFrameBuffering::OnUpdate()
 // Render the scene.
 void D3D12HelloFrameBuffering::OnRender()
 {
+    auto now = std::chrono::high_resolution_clock::now();
+    auto dur = now - m_start_time;
+    if (std::chrono::duration_cast<std::chrono::seconds>(dur).count() > 1)
+    {
+        m_start_time = now;
+        m_log_os << m_fps_counter << std::endl;
+        m_fps_counter = 0;
+    }
+    ++m_fps_counter;
     // Record all the commands we need to render the scene into the command list.
     PopulateCommandList();
 
@@ -256,7 +268,7 @@ void D3D12HelloFrameBuffering::OnRender()
 
     // Present the frame.
     //垂直同步，flag为0
-    ThrowIfFailed(m_swapChain->Present(1, 0));
+    ThrowIfFailed(m_swapChain->Present(0, 0));
 
     MoveToNextFrame();
 }
@@ -343,4 +355,16 @@ void D3D12HelloFrameBuffering::MoveToNextFrame()
     //当前的帧fence为要等待结束的提交的fence，即被等待
     //currentFenceValue = 前台帧的fence值，此值在上上帧被更改，即那个frameIndex里被+1了。
     m_fenceValues[m_frameIndex] = currentFenceValue + 1;
+}
+
+void D3D12HelloFrameBuffering::OnKeyDown(UINT8 t)
+{
+    using namespace Utility;
+    switch (t)
+    {
+    case static_cast<UINT8>(KeyNum::esc) :
+        PostQuitMessage(0);
+    default:
+        break;
+    }
 }

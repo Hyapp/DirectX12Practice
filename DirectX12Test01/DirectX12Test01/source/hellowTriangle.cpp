@@ -1,5 +1,6 @@
 #include <stdafx.h>
 #include <hellowTriangle.h>
+#include <KeyNum.h>
 
 D3D12HellowTriangle::D3D12HellowTriangle(UINT width, UINT height, std::wstring title) :
 	DXSample(width, height, title),
@@ -7,7 +8,9 @@ D3D12HellowTriangle::D3D12HellowTriangle(UINT width, UINT height, std::wstring t
 	m_viewport(0.0f, 0.0f, static_cast<float>(width),static_cast<float>(height)),
 	m_scissorRect(0,0,static_cast<LONG>(width), static_cast<LONG>(height)),
 	m_rtvDescriptorSize(0)
-{}
+{
+	m_log_os.open(R"(C:\Users\dell\Desktop\log.txt)", std::ios::app);
+}
 
 void D3D12HellowTriangle::OnInit()
 {
@@ -222,12 +225,22 @@ void D3D12HellowTriangle::OnUpdate()
 
 void D3D12HellowTriangle::OnRender()
 {
+	auto now = std::chrono::high_resolution_clock::now();
+	auto dur = now - m_start_time;
+	if (std::chrono::duration_cast<std::chrono::seconds>(dur).count() > 1)
+	{
+		m_start_time = now;
+		m_log_os << m_fps_counter << std::endl;
+		m_fps_counter = 0;
+	}
+	++m_fps_counter;
+
 	PopulateCommandList();
 
 	ID3D12CommandList* ppCommandLists[] = { m_commandList.Get() };
 	m_commandQueue->ExecuteCommandLists(_countof(ppCommandLists), ppCommandLists);
 
-	ThrowIfFailed(m_swapChain->Present(1, 0));
+	ThrowIfFailed(m_swapChain->Present(0, 0));
 
 	WaitForPreviousFrame();
 }
@@ -280,4 +293,16 @@ void D3D12HellowTriangle::WaitForPreviousFrame()
 	}
 
 	m_frameIndex = m_swapChain->GetCurrentBackBufferIndex();
+}
+
+void D3D12HellowTriangle::OnKeyDown(UINT8 t)
+{
+	using namespace Utility;
+	switch (t)
+	{
+		case static_cast<UINT8>(KeyNum::esc) :
+			PostQuitMessage(0);
+		default:
+			break;
+	}
 }

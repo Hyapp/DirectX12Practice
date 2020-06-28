@@ -3,7 +3,7 @@
 #include <MathHelper.h>
 #include <UploadBuffer.h>
 
-struct ObjectConstants 
+struct ObjectConstants_C7
 {
 	DirectX::XMFLOAT4X4 World = MathHelper::Identity4x4();
 };
@@ -27,7 +27,7 @@ struct PassConstants
     float DeltaTime = 0.0f;
 };
 
-struct Vertex
+struct Vertex_C7
 {
     DirectX::XMFLOAT3 pos;
     DirectX::XMFLOAT4 color;
@@ -44,7 +44,7 @@ public:
     Microsoft::WRL::ComPtr<ID3D12CommandAllocator> CmdListAlloc;
 
     std::unique_ptr<UploadBuffer<PassConstants>> PassCB = nullptr;
-    std::unique_ptr<UploadBuffer<ObjectConstants>> ObjectCB = nullptr;
+    std::unique_ptr<UploadBuffer<ObjectConstants_C7>> ObjectCB = nullptr;
 
     UINT64 Fence = 0;
 };

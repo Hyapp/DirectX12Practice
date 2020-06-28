@@ -2,6 +2,7 @@
 
 const int gNumFrameResources = 3;
 
+#pragma region Ctor
 ShapesApp::ShapesApp(HINSTANCE hInstance)
 	:D3DApp(hInstance)
 {
@@ -14,6 +15,8 @@ ShapesApp::~ShapesApp()
 		FlushCommandQueue();
 	}
 }
+
+#pragma endregion Ctor
 
 bool ShapesApp::Initialize()
 {
@@ -197,7 +200,7 @@ void ShapesApp::UpdateObjectCBs(const GameTimer& gt)
 		{
 			XMMATRIX world = XMLoadFloat4x4(&e->World);
 
-			ObjectConstants objConstants;
+			ObjectConstants_C7 objConstants;
 			XMStoreFloat4x4(&objConstants.World, XMMatrixTranspose(world));
 
 			currObjectCB->CopyData(e->ObjCBIndex, objConstants);
@@ -256,7 +259,7 @@ void ShapesApp::BuildDescriptorHeaps()
 
 void ShapesApp::BuildConstantBufferViews()
 {
-	UINT objCBByteSize = d3dUtil::CalcConstantBufferByteSize(sizeof(ObjectConstants));
+	UINT objCBByteSize = d3dUtil::CalcConstantBufferByteSize(sizeof(ObjectConstants_C7));
 	UINT objCount = (UINT)mOpaqueRitems.size();
 
 	for (int frameIndex = 0; frameIndex < gNumFrameResources; frameIndex++)
@@ -392,7 +395,7 @@ void ShapesApp::BuildShapeGeometry()
 		sphere.Vertices.size() +
 		cylinder.Vertices.size();
 
-	std::vector<Vertex> vertices(totalVertexCount);
+	std::vector<Vertex_C7> vertices(totalVertexCount);
 
 	UINT k = 0;
 	for (size_t i = 0; i < box.Vertices.size(); ++i, ++k)
@@ -425,7 +428,7 @@ void ShapesApp::BuildShapeGeometry()
 	indices.insert(indices.end(), std::begin(sphere.GetIndices16()), std::end(sphere.GetIndices16()));
 	indices.insert(indices.end(), std::begin(cylinder.GetIndices16()), std::end(cylinder.GetIndices16()));
 
-	const UINT vbByteSize = (UINT)vertices.size() * sizeof(Vertex);
+	const UINT vbByteSize = (UINT)vertices.size() * sizeof(Vertex_C7);
 	const UINT ibByteSize = (UINT)indices.size() * sizeof(std::uint16_t);
 
 	auto geo = std::make_unique<MeshGeometry>();
@@ -443,7 +446,7 @@ void ShapesApp::BuildShapeGeometry()
 	geo->IndexBufferGPU = d3dUtil::CreateDefaultBuffer(md3dDevice.Get(),
 		mCommandList.Get(), indices.data(), ibByteSize, geo->IndexBufferUploader);
 
-	geo->VertexByteStride = sizeof(Vertex);
+	geo->VertexByteStride = sizeof(Vertex_C7);
 	geo->VertexBufferByteSize = vbByteSize;
 	geo->IndexFormat = DXGI_FORMAT_R16_UINT;
 	geo->IndexBufferByteSize = ibByteSize;
@@ -581,7 +584,7 @@ void ShapesApp::BuildRenderItems()
 
 void ShapesApp::DrawRenderItems(ID3D12GraphicsCommandList* cmdList, const std::vector<RenderItem*>& ritems)
 {
-	UINT objCBByteSize = d3dUtil::CalcConstantBufferByteSize(sizeof(ObjectConstants));
+	UINT objCBByteSize = d3dUtil::CalcConstantBufferByteSize(sizeof(ObjectConstants_C7));
 
 	auto objectCB = mCurrFrameResource->ObjectCB->Resource();
 

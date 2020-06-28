@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\ConstBuffer.cpp" />
-    <ClCompile Include="source\DirectX12Test01.cpp" />
+    <ClCompile Include="source\HelloWindow.cpp" />
     <ClCompile Include="source\DXSample.cpp" />
     <ClCompile Include="source\hellowTriangle.cpp" />
     <ClCompile Include="source\main.cpp" />
@@ -34,8 +34,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header\ConstBuffer.h" />
-    <ClInclude Include="header\DirectX12Test01.h" />
+    <ClInclude Include="header\HelloWindow.h" />
     <ClInclude Include="header\hellowTriangle.h" />
+    <ClInclude Include="header\KeyNum.h" />
     <ClInclude Include="header\stdafx.h" />
     <ClInclude Include="header\TestBundles.h" />
     <ClInclude Include="header\TestFrameBuffer.h" />
@@ -140,7 +141,7 @@
     <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <IncludePath>H:\DirectX12Test\DirectX12Practice\Include;H:\DirectX12Test\DirectX12Practice\DirectX12Test01\DirectX12Test01\header;$(IncludePath)</IncludePath>
-    <SourcePath>H:\DirectX12Test\DirectX12Practice\DirectX12Test01\DirectX12Test01\source;$(SourcePath)</SourcePath>
+    <SourcePath>/source;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -173,6 +174,8 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <CompileAsWinRT>false</CompileAsWinRT>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

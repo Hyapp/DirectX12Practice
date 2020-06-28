@@ -15,6 +15,8 @@ public:
 	virtual void OnRender() override;
 	virtual void OnDestroy() override;
 
+	virtual void OnKeyDown(UINT8) override;
+
 private :
 	static const UINT FrameCount = 2;
 	static const UINT TextureWidth = 256;
@@ -59,4 +61,6 @@ private :
 	void WaitForPreviousFrame();
 
 	std::vector<UINT8> GenerateTextureData();
+
+	std::ofstream m_log_os;
 };
