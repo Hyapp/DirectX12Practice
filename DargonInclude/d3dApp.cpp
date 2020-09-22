@@ -562,6 +562,11 @@ ID3D12Resource* D3DApp::CurrentBackBuffer()const
 
 D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::CurrentBackBufferView()const
 {
+	if (mRtvHeap->GetCPUDescriptorHandleForHeapStart().ptr == 0)
+	{
+		assert(true, "Fuck");
+	}
+	
 	return CD3DX12_CPU_DESCRIPTOR_HANDLE(
 		mRtvHeap->GetCPUDescriptorHandleForHeapStart(),
 		mCurrBackBuffer,
@@ -570,6 +575,11 @@ D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::CurrentBackBufferView()const
 
 D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::DepthStencilView()const
 {
+	auto handle = mDsvHeap->GetCPUDescriptorHandleForHeapStart();
+	if (0 == handle.ptr)
+	{
+		assert(true, "Fuck");
+	}
 	return mDsvHeap->GetCPUDescriptorHandleForHeapStart();
 }
 

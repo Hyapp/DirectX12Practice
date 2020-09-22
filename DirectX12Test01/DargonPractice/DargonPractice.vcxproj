@@ -149,9 +149,12 @@
     <ClInclude Include="..\..\DargonInclude\MathHelper.h" />
     <ClInclude Include="..\..\DargonInclude\UploadBuffer.h" />
     <ClInclude Include="header\Box_C6.h" />
-    <ClInclude Include="header\FrameResource.h" />
+    <ClInclude Include="header\C7\C7_Geometry\FrameResource0.hpp" />
+    <ClInclude Include="header\C7\C7_Geometry\Shapes_C7.hpp" />
+    <ClInclude Include="header\C7\C7_LandAndWave\FrameResource1.hpp" />
+    <ClInclude Include="header\C7\C7_LandAndWave\LandAndWaves_C7.hpp" />
+    <ClInclude Include="header\C7\C7_LandAndWave\Waves.hpp" />
     <ClInclude Include="header\Init.h" />
-    <ClInclude Include="header\Shapes_C7.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\DargonInclude\Camera.cpp" />
@@ -162,10 +165,13 @@
     <ClCompile Include="..\..\DargonInclude\GeometryGenerator.cpp" />
     <ClCompile Include="..\..\DargonInclude\MathHelper.cpp" />
     <ClCompile Include="source\Box_C6.cpp" />
-    <ClCompile Include="source\FrameResource.cpp" />
+    <ClCompile Include="source\C7\Geometry\FrameResource0.cpp" />
+    <ClCompile Include="source\C7\Geometry\Shapes_C7.cpp" />
+    <ClCompile Include="source\C7\LandAndWaves\FrameResource1.cpp" />
+    <ClCompile Include="source\C7\LandAndWaves\LandAndWaves_C7.cpp" />
+    <ClCompile Include="source\C7\LandAndWaves\Waves.cpp" />
     <ClCompile Include="source\Init.cpp" />
     <ClCompile Include="source\main.cpp" />
-    <ClCompile Include="source\Shapes_C7.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\Box_C6.hlsl">
@@ -173,6 +179,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="shader\C7_LandAndWaves.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="shader\Shapes_C7.hlsl">
