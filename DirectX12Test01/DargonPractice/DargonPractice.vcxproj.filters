@@ -49,14 +49,20 @@
     <Filter Include="头文件\C7\Geometry">
       <UniqueIdentifier>{ed93b4f2-5bdf-4ec2-ae80-73ad40a9f34c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\C4">
+      <UniqueIdentifier>{869f52b7-ee80-44c9-a905-c8577aef8a25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\C6">
+      <UniqueIdentifier>{32c3db3f-e376-4a4f-996f-5ea26b97b59d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\C6">
+      <UniqueIdentifier>{73078e02-ea33-4360-8495-8a9cd183c437}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\C4">
+      <UniqueIdentifier>{ce06f578-8306-4385-b358-d453f9ce0da0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="header\Init.h">
-      <Filter>头文件\Main</Filter>
-    </ClInclude>
-    <ClInclude Include="header\Box_C6.h">
-      <Filter>头文件\Main</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\DargonInclude\Camera.h">
       <Filter>头文件\Comman</Filter>
     </ClInclude>
@@ -99,11 +105,14 @@
     <ClInclude Include="header\C7\C7_LandAndWave\Waves.hpp">
       <Filter>头文件\C7\LandAndWaves</Filter>
     </ClInclude>
+    <ClInclude Include="header\C4\Init.hpp">
+      <Filter>头文件\C4</Filter>
+    </ClInclude>
+    <ClInclude Include="header\C6\Box_C6.hpp">
+      <Filter>头文件\C6</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\Init.cpp">
-      <Filter>源文件\Main</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\DargonInclude\Camera.cpp">
       <Filter>源文件\Comman</Filter>
     </ClCompile>
@@ -125,9 +134,6 @@
     <ClCompile Include="..\..\DargonInclude\MathHelper.cpp">
       <Filter>源文件\Comman</Filter>
     </ClCompile>
-    <ClCompile Include="source\Box_C6.cpp">
-      <Filter>源文件\Main</Filter>
-    </ClCompile>
     <ClCompile Include="source\main.cpp">
       <Filter>源文件\Main</Filter>
     </ClCompile>
@@ -145,6 +151,12 @@
     </ClCompile>
     <ClCompile Include="source\C7\LandAndWaves\Waves.cpp">
       <Filter>源文件\C7\LandAndWaves</Filter>
+    </ClCompile>
+    <ClCompile Include="source\C4\Init.cpp">
+      <Filter>源文件\C4</Filter>
+    </ClCompile>
+    <ClCompile Include="source\C6\Box_C6.cpp">
+      <Filter>源文件\C6</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

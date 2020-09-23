@@ -148,13 +148,13 @@
     <ClInclude Include="..\..\DargonInclude\GeometryGenerator.h" />
     <ClInclude Include="..\..\DargonInclude\MathHelper.h" />
     <ClInclude Include="..\..\DargonInclude\UploadBuffer.h" />
-    <ClInclude Include="header\Box_C6.h" />
+    <ClInclude Include="header\C4\Init.hpp" />
+    <ClInclude Include="header\C6\Box_C6.hpp" />
     <ClInclude Include="header\C7\C7_Geometry\FrameResource0.hpp" />
     <ClInclude Include="header\C7\C7_Geometry\Shapes_C7.hpp" />
     <ClInclude Include="header\C7\C7_LandAndWave\FrameResource1.hpp" />
     <ClInclude Include="header\C7\C7_LandAndWave\LandAndWaves_C7.hpp" />
     <ClInclude Include="header\C7\C7_LandAndWave\Waves.hpp" />
-    <ClInclude Include="header\Init.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\DargonInclude\Camera.cpp" />
@@ -164,13 +164,13 @@
     <ClCompile Include="..\..\DargonInclude\GameTimer.cpp" />
     <ClCompile Include="..\..\DargonInclude\GeometryGenerator.cpp" />
     <ClCompile Include="..\..\DargonInclude\MathHelper.cpp" />
-    <ClCompile Include="source\Box_C6.cpp" />
+    <ClCompile Include="source\C4\Init.cpp" />
+    <ClCompile Include="source\C6\Box_C6.cpp" />
     <ClCompile Include="source\C7\Geometry\FrameResource0.cpp" />
     <ClCompile Include="source\C7\Geometry\Shapes_C7.cpp" />
     <ClCompile Include="source\C7\LandAndWaves\FrameResource1.cpp" />
     <ClCompile Include="source\C7\LandAndWaves\LandAndWaves_C7.cpp" />
     <ClCompile Include="source\C7\LandAndWaves\Waves.cpp" />
-    <ClCompile Include="source\Init.cpp" />
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
